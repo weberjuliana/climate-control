@@ -3,9 +3,9 @@ from typing import Dict, List, Optional
 
 import requests
 
-from climate.climatecontrol.src.config.settings import settings
-from climate.climatecontrol.src.repository.forecast_repository import save_forecast_data
-from climate.climatecontrol.src.entities.climate_models import OpenWeatherResponse
+from climatecontrol.src.config.settings import settings
+from climatecontrol.src.repository.forecast_repository import save_forecast_data
+from climatecontrol.src.entities.climate_models import OpenWeatherResponse
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
