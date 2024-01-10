@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "55551124-85c0-4f65-bff2-9c8f7e318a97",
+		"name": "Open Weather Map",
+		"description": "# Endpoints da API\n\n### 1\\. Endpoint: `/forecast`\n\n- **Método**: GET\n    \n- **Headers**: Authorization (Bearer Token)\n    \n- **Parâmetros de Query**:\n    \n    - `city`: string (opcional)\n        \n    - `lat`: float (opcional, descrição: \"Latitude\")\n        \n    - `lon`: float (opcional, descrição: \"Longitude\")\n        \n- **Resposta**: `WeatherForecastResponse`\n    \n\n### 2\\. Endpoint: `/all`\n\n- **Método**: GET\n    \n- **Headers**: Authorization (Bearer Token)\n    \n- **Resposta**: `WeatherForecastResponse`\n    \n\n### 3\\. Endpoint: `/by-id/{document_id}`\n\n- **Método**: GET\n    \n- **Headers**: Authorization (Bearer Token)\n    \n- **Parâmetros de Path**:\n    \n    - `document_id`: string\n        \n- **Resposta**: `WeatherForecastResponse`\n    \n\n### 4\\. Endpoint: `/delete-all`\n\n- **Método**: DELETE\n    \n- **Headers**: Authorization (Bearer Token)\n    \n- **Resposta**: Mensagem de confirmação de exclusão\n    \n\n### 5\\. Endpoint: `/delete-by-id/{document_id}`\n\n- **Método**: DELETE\n    \n- **Headers**: Authorization (Bearer Token)\n    \n- **Parâmetros de Path**:\n    \n    - `document_id`: string\n        \n- **Resposta**: Mensagem de confirmação de exclusão\n    \n\n### 6\\. Endpoint: `/login`\n\n- **Método**: POST\n    \n- **Corpo da Requisição**:\n    \n    - `username`: string\n        \n    - `password`: string\n        \n- **Resposta**: Token JWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5390793"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Weather Forecast",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Weather data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Weather data by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all weather data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoicm9vdCIsImV4cGlyZXMiOjE3MDE0Nzk5MDguODA1ODMzfQ.Knc6_OkLEZuxvqdWIT0spnpmqNK0TBF7HPVpjNrrHOM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/weather/delete-all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"weather",
+						"delete-all"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete weather data by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoicm9vdCIsImV4cGlyZXMiOjE3MDE0Nzk5MDguODA1ODMzfQ.Knc6_OkLEZuxvqdWIT0spnpmqNK0TBF7HPVpjNrrHOM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000?document_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"query": [
+						{
+							"key": "document_id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
