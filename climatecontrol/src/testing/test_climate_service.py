@@ -4,8 +4,7 @@ import pytest
 import requests
 
 from climatecontrol.src.entities.climate_models import OpenWeatherResponse
-from climatecontrol.src.logic.climate_service import (ClimateService,
-                                               save_forecast_data)
+from climatecontrol.src.logic.climate_service import ClimateService, save_forecast_data
 
 VALID_CITY = "Tokyo"
 VALID_LAT = 35.6895
@@ -81,9 +80,7 @@ def test_network_failure(open_weather_api):
         result = open_weather_api.fetch_forecast_by_city(VALID_CITY)
         assert result is None
 
-        result = open_weather_api.fetch_forecast_by_coordinates(
-            VALID_LAT, VALID_LON
-        )
+        result = open_weather_api.fetch_forecast_by_coordinates(VALID_LAT, VALID_LON)
         assert result is None
 
 
@@ -109,6 +106,7 @@ def test_response_validation(open_weather_api):
 #             assert result is not None
 #             assert result["city"].name == "Canoas"
 #             mock_save.assert_called_once()
+
 
 @pytest.mark.parametrize(
     "test_id, city, expected_result",
@@ -148,7 +146,9 @@ def test_fetch_forecast_by_city(test_id, city, expected_result, open_weather_api
 
 
 def test_save_forecast_data():
-    with patch("climatecontrol.src.repository.mongo_connection.MongoDB.get_database") as mock_get_database:
+    with patch(
+        "climatecontrol.src.repository.mongo_connection.MongoDB.get_database"
+    ) as mock_get_database:
         mock_db = MagicMock()
         mock_collection = MagicMock()
         mock_db.weather_data = mock_collection

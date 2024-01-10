@@ -4,11 +4,12 @@ from typing import Dict, List, Optional
 import requests
 
 from climatecontrol.src.config.settings import settings
-from climatecontrol.src.repository.forecast_repository import save_forecast_data
 from climatecontrol.src.entities.climate_models import OpenWeatherResponse
+from climatecontrol.src.repository.forecast_repository import save_forecast_data
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 class ClimateService:
     def __init__(self) -> None:
@@ -29,7 +30,9 @@ class ClimateService:
             logger.error(f"Failed to retrieve weather forecast for city: {e}")
             return None
 
-    def fetch_forecast_by_coordinates(self, lat: float, lon: float) -> Optional[List[Dict]]:
+    def fetch_forecast_by_coordinates(
+        self, lat: float, lon: float
+    ) -> Optional[List[Dict]]:
         try:
             params: Dict = {
                 "lat": lat,

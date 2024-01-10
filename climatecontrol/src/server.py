@@ -1,16 +1,19 @@
-from fastapi import FastAPI
-from climatecontrol.src.interfaces.v1.routes.signin import login_router
-from climatecontrol.src.interfaces.v1.routes import forecast
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from climatecontrol.src.interfaces.v1.routes import forecast
+from climatecontrol.src.interfaces.v1.routes.signin import login_router
 from climatecontrol.src.repository.mongo_connection import MongoDB
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     MongoDB.initialize()
     yield
     MongoDB.close()
+
 
 app = FastAPI(title="Climate Control API")
 app.include_router(login_router, prefix="/auth", tags=["Login"])

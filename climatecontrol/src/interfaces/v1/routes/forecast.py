@@ -3,12 +3,14 @@ from typing import Optional
 from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, Query
 
+from climatecontrol.src.entities.api_entities import (
+    SimpleForecast,
+    SimpleWeatherCondition,
+    WeatherForecastResponse,
+)
 from climatecontrol.src.interfaces.v1.authentication.token_bearer import JWTBearer
-from climatecontrol.src.repository.mongo_connection import MongoDB
-from climatecontrol.src.entities.api_entities import (SimpleForecast,
-                                            SimpleWeatherCondition,
-                                            WeatherForecastResponse)
 from climatecontrol.src.logic.climate_service import ClimateService
+from climatecontrol.src.repository.mongo_connection import MongoDB
 
 router = APIRouter()
 import logging
@@ -38,15 +40,12 @@ def weather_forecast(
             detail="Provide either city name or both latitude and longitude, but not both.",
         )
 
-    
     if city:
         forecast_data = weather_service.fetch_forecast_by_city(city)
 
-    
     elif lat is not None and lon is not None:
         forecast_data = weather_service.fetch_forecast_by_coordinates(lat, lon)
 
-    
     else:
         raise HTTPException(
             status_code=400,
@@ -80,7 +79,6 @@ def weather_forecast(
     )
 
 
-
 def convert_objectid_to_str(data):
     if isinstance(data, list):
         logger.info(f"Converting list: {data}")
@@ -104,12 +102,11 @@ def get_all_weather_data():
     try:
         db = MongoDB.get_database()
         weather_collection = db.weather_data
-        
+
         weather_data = list(weather_collection.find({}))
-        
+
         weather_data_converted = convert_objectid_to_str(weather_data)
 
-        
         forecasts = []
         for forecast in weather_data_converted:
             for data in forecast.get("list", []):
@@ -174,9 +171,7 @@ def get_weather_data_by_id(document_id: str):
         )
     except Exception as e:
         logger.error("Error occurred while fetching data from the database", exc_info=e)
-        raise HTTPException(
-            status_code=500, detail="Error fetching data from db"
-        )
+        raise HTTPException(status_code=500, detail="Error fetching data from db")
 
 
 @router.delete("/delete-all", dependencies=[Depends(JWTBearer())])
@@ -184,16 +179,12 @@ def delete_all_weather_data():
     try:
         db = MongoDB.get_database()
         weather_collection = db.weather_data
-        
+
         deletion_result = weather_collection.delete_many({})
-        return {
-            "message": f"Deleted documents: {deletion_result.deleted_count}"
-        }
+        return {"message": f"Deleted documents: {deletion_result.deleted_count}"}
     except Exception as e:
         logger.error("Error occurred while deleting data from the database", exc_info=e)
-        raise HTTPException(
-            status_code=500, detail="Error deleting data"
-        )
+        raise HTTPException(status_code=500, detail="Error deleting data")
 
 
 @router.delete("/delete-by-id/{document_id}", dependencies=[Depends(JWTBearer())])
@@ -201,15 +192,11 @@ def delete_weather_data_by_id(document_id: str):
     try:
         db = MongoDB.get_database()
         weather_collection = db.weather_data
-        
+
         deletion_result = weather_collection.delete_one({"_id": ObjectId(document_id)})
         if deletion_result.deleted_count == 0:
-            raise HTTPException(
-                status_code=404, detail="Document not found or deleted"
-            )
+            raise HTTPException(status_code=404, detail="Document not found or deleted")
         return {"message": "Document deleted successfull"}
     except Exception as e:
         logger.error("Error occurred while deleting data from the database", exc_info=e)
-        raise HTTPException(
-            status_code=500, detail="Error deleting data"
-        )
+        raise HTTPException(status_code=500, detail="Error deleting data")
