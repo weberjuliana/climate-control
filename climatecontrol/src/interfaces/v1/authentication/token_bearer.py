@@ -1,7 +1,7 @@
 from fastapi import HTTPException, Request
 from fastapi.security import HTTPBearer
 
-from .auth_handler import decodeJWT
+from climatecontrol.src.interfaces.v1.authentication.token_handler import decodeJWT
 
 
 class JWTBearer(HTTPBearer):

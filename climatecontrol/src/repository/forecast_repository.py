@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def save_weather_data(weather_data: WeatherForecastResponse):
+def save_forecast_data(weather_data: WeatherForecastResponse):
     try:
         db = MongoDB.get_database()
         weather_collection = db.weather_data
