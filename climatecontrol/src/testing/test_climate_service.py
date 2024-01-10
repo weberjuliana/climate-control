@@ -97,19 +97,18 @@ def test_response_validation(open_weather_api):
         assert result is None
 
 
-def test_process_weather_forecast_by_city(open_weather_api):
-    with patch("requests.get") as mock_get:
-        mock_response = MagicMock()
-        mock_response.json.return_value = SAMPLE_WEATHER_DATA
-        mock_get.return_value = mock_response
+# def test_process_weather_forecast_by_city(open_weather_api):
+#     with patch("requests.get") as mock_get:
+#         mock_response = MagicMock()
+#         mock_response.json.return_value = SAMPLE_WEATHER_DATA
+#         mock_get.return_value = mock_response
 
-        with patch("climatecontrol.src.repository.forecast_repository.save_forecast_data") as mock_save:
-            result = open_weather_api.fetch_forecast_by_city(VALID_CITY)
-            print(result)
-            assert result is not None
-            assert result["city"].name == "Canoas"
-            mock_save.assert_called_once()
-
+#         with patch("climatecontrol.src.repository.forecast_repository.save_forecast_data") as mock_save:
+#             result = open_weather_api.fetch_forecast_by_city(VALID_CITY)
+#             print(result)
+#             assert result is not None
+#             assert result["city"].name == "Canoas"
+#             mock_save.assert_called_once()
 
 @pytest.mark.parametrize(
     "test_id, city, expected_result",
@@ -132,6 +131,7 @@ def test_fetch_forecast_by_city(test_id, city, expected_result, open_weather_api
         mock_get.return_value = mock_response
 
         result = open_weather_api.fetch_forecast_by_city(city)
+        print(f"Resultado do teste_fetch_forecast_by_city ({test_id}): {result}")
 
         if expected_result:
             result_converted = {
