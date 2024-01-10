@@ -1,7 +1,7 @@
 import logging
 
-from climatecontrol.src.repository.mongo_connection import MongoDB
 from climatecontrol.src.entities.api_entities import WeatherForecastResponse
+from climatecontrol.src.repository.mongo_connection import MongoDB
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
